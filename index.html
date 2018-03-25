@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>lottery</title>
+	<style >
+		.bingotable{
+			border:3px #cccccc solid;
+			cellpadding="10";
+			border='1';
+		}
+	</style>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var data;
+			$.ajax({   
+		          url: "bingo_bingo.php",   
+		          type: "GET",   
+		          dataType: "json",   
+		          success: function(json) {   
+		          	create_table(json);
+				          }   
+		    });  
+		
+		})
+
+		function create_table(json){
+			console.log(json);
+			data =json;
+
+            var $table = $('#table');
+
+            
+
+            for(var i in data){
+
+	            var $tr = $(document.createElement('tr'));
+
+	            $tr.appendTo($table);
+
+	            for(var j in data[i]){
+
+                   var $td = $(document.createElement('td'));
+
+                   $td.text(data[i][j]);
+
+                   $td.attr('align', 'center');
+
+                   $td.appendTo($tr);
+
+	            }
+
+            }
+		}
+	</script>
+</head>
+<body>
+
+	<form name="form1" method="get" action="">
+
+    <div id="test" align="center">
+    	<table style="border:3px #cccccc solid;" cellpadding="10" border='1' id = "table">
+    		<tr height = 30 >
+	    		<td style="color:red" align="center" colspan="5">
+	    			<b>Bingo Bingo賓果賓果開獎號碼查詢</b>
+	    		</td>
+    		</tr>
+    		<tr  bgcolor="#4d4d4d" style="color:#FFFFFF">
+    			<td align="center"><b>期　　數</b></td>
+    			<td  align="center"><b>開獎時間</b></td>
+    			<td  align="center"><b>開獎號碼</b></td>
+    			<td  align="center"><b>大小</b></td>
+    			<td  align="center"><b>單雙</b></td>
+    		</tr>
+    	</table>
+    </div>
+
+    </form>
+</body>
+</html>
