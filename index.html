@@ -6,10 +6,17 @@
 
 	<title>lottery</title>
 	<style >
-		.bingotable{
-			border:3px #cccccc solid;
-			cellpadding="10";
-			border='1';
+		.button {
+		    background-color: #4CAF50;
+		    border: none;
+		    color: white;
+		    padding: 15px 32px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		    margin: 4px 2px;
+		    cursor: pointer;
 		}
 	</style>
 
@@ -25,8 +32,9 @@
 		          	create_table(json);
 				          }   
 		    });  
-		
+			
 		})
+
 
 		function create_table(json){
 			console.log(json);
@@ -57,6 +65,7 @@
             }
 		}
 	</script>
+	
 </head>
 <body>
 
@@ -78,7 +87,34 @@
     		</tr>
     	</table>
     </div>
+    <div align="center">
+    	<button class="button" id = "random_test">電腦亂數測試</button>
+    </div>
 
     </form>
+    <script type="text/javascript">
+    	$("#random_test").click(function(){
+				/*var test_number = 10;
+				var bingo_max = 39;
+				var bingo_min = 1;
+				var lottery_numbers = new Array();
+
+
+				for(i=0;i<test_number;i++){
+					var random_star = Math.floor(Math.random() * 10) + 1;
+					for(j=0;j<random_star;j++){
+
+						random_number = Math.floor(Math.random() * 39) + 1;
+						if($.inArray(random_number, lottery_numbers[i])){
+							i--;
+						}else{
+							lottery_numbers[i][j] = random_number;
+						}
+					}
+				}*/
+
+				console.log("fuck");
+			});
+    </script>
 </body>
 </html>
