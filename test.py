@@ -31,7 +31,6 @@ if r.status_code == requests.codes.ok:
   """
   datas = soup.select('table.tableFull > tr > td > table > tr td[class^=tdA]')
   #print(datas)
-  print("<------------------->")
   result_list = [] 
   i=1
   tmp_list = []
@@ -42,8 +41,10 @@ if r.status_code == requests.codes.ok:
       tmp_list = []
       i=0
     i+=1
-  json_test = json.dumps(result_list,ensure_ascii=False)  
+  json_test = json.dumps(result_list)  
+  """
   with open('lottery_data/'+datetime.datetime.now().strftime("%Y-%m-%d")+'_data.json', 'w') as file:
     file.write(json_test)
     file.close()
-  print("end")
+  """  
+  print(json_test)

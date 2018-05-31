@@ -18,6 +18,51 @@
 		    margin: 4px 2px;
 		    cursor: pointer;
 		}
+		#loader {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 1;
+			width: 150px;
+			height: 150px;
+			margin: -75px 0 0 -75px;
+			border: 16px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 16px solid #3498db;
+			width: 120px;
+			height: 120px;
+			-webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
+
+		@-webkit-keyframes spin {
+			0% { -webkit-transform: rotate(0deg); }
+			100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		/* Add animation to "page content" */
+		.animate-bottom {
+			position: relative;
+			-webkit-animation-name: animatebottom;
+			-webkit-animation-duration: 1s;
+			animation-name: animatebottom;
+			animation-duration: 1s
+		}
+
+		@-webkit-keyframes animatebottom {
+			from { bottom:-100px; opacity:0 } 
+			to { bottom:0px; opacity:1 }
+		}
+
+		@keyframes animatebottom { 
+			from{ bottom:-100px; opacity:0 } 
+			to{ bottom:0; opacity:1 }
+		}
 	</style>
 
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -30,9 +75,9 @@
 		          dataType: "json",   
 		          success: function(json) {   
 		          	create_table(json);
+		          	showPage();
 				          }   
 		    });  
-			
 		})
 
 
@@ -41,28 +86,53 @@
 			data =json;
 
             var $table = $('#table');
+            console.log(data.length);
 
-            
+            if(data.length == 1){
+            	var $tr = $(document.createElement('tr'));
+            	$tr.appendTo($table);
+            	var $td = $(document.createElement('td'));
+            	$td.text("沒有資料");
+            	$td.attr('align', 'center');
+            	$td.attr('colspan', '5');
+	            $td.appendTo($tr);
+            }else{
 
-            for(var i in data){
+            	for(var i in data){
 
-	            var $tr = $(document.createElement('tr'));
+		            var $tr = $(document.createElement('tr'));
 
-	            $tr.appendTo($table);
+		            $tr.appendTo($table);
 
-	            for(var j in data[i]){
+		            for(var j in data[i]){
 
-                   var $td = $(document.createElement('td'));
+	                   var $td = $(document.createElement('td'));
 
-                   $td.text(data[i][j]);
+	                   $td.text(data[i][j]);
 
-                   $td.attr('align', 'center');
+	                   $td.attr('align', 'center');
 
-                   $td.appendTo($tr);
+	                   $td.appendTo($tr);
+
+		            }
 
 	            }
-
             }
+
+		}
+
+		function showPage() {
+			document.getElementById("loader").style.display = "none";
+			document.getElementById("loading_text").style.display = "none";
+			document.getElementById("test").style.display = "block";
+			document.getElementById("reload").style.display = "block";
+		}
+
+		function reload() {
+			document.getElementById("loader").style.display = "block";
+			document.getElementById("loading_text").style.display = "block";
+			document.getElementById("test").style.display = "none";
+			document.getElementById("reload").style.display = "none";
 		}
 	</script>
 	
@@ -71,7 +141,14 @@
 
 	<form name="form1" method="get" action="">
 
-    <div id="test" align="center">
+	<div id="reload" align="center" style="display:none;">
+    	<button class="button" id = "random_test">重新載入</button>
+    </div>
+    <div id="loading_text" align="center">
+    	<h1>載入中</h1>
+    </div>
+    <div id="loader"></div>
+    <div id="test" align="center" style="display:none;">
     	<table style="border:3px #cccccc solid;" cellpadding="10" border='1' id = "table">
     		<tr height = 30 >
 	    		<td style="color:red" align="center" colspan="5">
@@ -87,33 +164,22 @@
     		</tr>
     	</table>
     </div>
-    <div align="center">
-    	<button class="button" id = "random_test">電腦亂數測試</button>
-    </div>
+    
 
     </form>
     <script type="text/javascript">
     	$("#random_test").click(function(){
-				var test_number = 10;
-				var bingo_max = 39;
-				var bingo_min = 1;
-				var lottery_numbers = new Array();
-
-
-				for(i=0;i<test_number;i++){
-					var random_star = Math.floor(Math.random() * 10) + 1;
-					for(j=0;j<random_star;j++){
-
-						random_number = Math.floor(Math.random() * 39) + 1;
-						if($.inArray(random_number, lottery_numbers[i])){
-							i--;
-						}else{
-							lottery_numbers[i][j] = random_number;
-						}
-					}
-				}
-
-				console.log("fuck");
+				var data;
+				reload();
+				$.ajax({   
+			          url: "bingo_bingo.php",   
+			          type: "GET",   
+			          dataType: "json",   
+			          success: function(json) {   
+			          	create_table(json);
+			          	showPage();
+					          }   
+			    });  
 			});
     </script>
 </body>
