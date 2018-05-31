@@ -46,5 +46,6 @@ if r.status_code == requests.codes.ok:
   with open('lottery_data/'+datetime.datetime.now().strftime("%Y-%m-%d")+'_data.json', 'w') as file:
     file.write(json_test)
     file.close()
-  """  
-  print(json_test)
+
+  print("end")
+
