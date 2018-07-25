@@ -1,2 +1,2 @@
 # lottery
-### just read for fun
+### just write for fun
